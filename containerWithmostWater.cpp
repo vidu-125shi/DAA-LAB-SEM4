@@ -14,5 +14,3 @@ public:
         return maxWater;
     }
 };
-
-//this is from leetcode
