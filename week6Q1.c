@@ -1,15 +1,3 @@
-// QUESTION 1
-/*Given a (directed/undirected) graph, design an algorithm and implement it using a program to
-find if a path exists between two given vertices or not. (Hint: use DFS)
-Input Format:
-Input will be the graph in the form of adjacency matrix or adjacency list.
-Source vertex number and destination vertex number is also provided as an input.
-Output Format:
-Output will be 'Yes Path Exists' if path exists, otherwise print 'No Such Path Exists'.
-*/
-//Q2
-//biparted graph,divide the graph in 2parts,vertices in part 1 must connect to vertices in part but not eachother
-//
 
 #include <stdio.h>
 #include<stdlib.h>
