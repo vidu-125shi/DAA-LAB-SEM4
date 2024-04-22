@@ -1,13 +1,4 @@
-//Q2
-//biparted graph,divide the graph in 2parts,vertices in part 1 must connect to vertices in part but not eachother
-//
-/*Given a graph, design an algorithm and implement it using a program to find if a graph is
-bipartite or not. (Hint: use BFS)
-Input Format:
-Input will be the graph in the form of adjacency matrix or adjacency list.
-Output Format:
-Output will be 'Yes Bipartite' if graph is bipartite, otherwise print 'Not Bipartite'*/
-// C++ program to find out whether a 
+
 
 #include <iostream>
 #include <queue>
