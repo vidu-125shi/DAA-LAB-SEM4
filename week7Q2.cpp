@@ -11,17 +11,16 @@ struct Edge {
 };
 
 int main() {
-    int n, m; // Number of vertices and edges respectively
+    int n, m; 
     cin >> n >> m;
 
-    vector<vector<Edge>> graph(n); // Adjacency list representation of graph
-
-    // Input the edges of the graph
+    vector<vector<Edge>> graph(n); 
+    
     for (int i = 0; i < m; ++i) {
-        int u, v, w; // Edge from u to v with weight w
+        int u, v, w;
         cin >> u >> v >> w;
         graph[u].push_back(Edge(v, w));
-        graph[v].push_back(Edge(u, w)); // If the graph is undirected
+        graph[v].push_back(Edge(u, w)); 
     }
 
     int start=0;
