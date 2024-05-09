@@ -44,10 +44,12 @@ void quicksort(int arr[], int low, int high, int* comparisons, int* swaps) {
 }
 
 
-int main() {
+void main() {
     int t;
     scanf("%d",&t);
-    for(int i=0;i<t;i++){
+
+    while(t!=0){
+
         int n;
         scanf("%d",&n);
         int arr[n];
@@ -64,6 +66,6 @@ int main() {
     printf("\nNumber of comparisons: %d\n", comparisons);
     printf("Number of swaps: %d\n", swaps);
 
-    return 0;
+    t--;
 }
 }

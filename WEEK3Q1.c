@@ -18,8 +18,12 @@ void insertion(int *arr, int size) {
         arr[j + 1] = temp;
         swap++;
     }
+     for (int i = 0; i < size; i++) {
+        printf("%d ", arr[i]);
+    }
+    printf("\n");
     swap += comparisions;
-    printf("%d %d\n", comparisions, swap);
+    printf("comparisions = %d\nswaps = %d\n", comparisions, swap);
 }
 
 void main() {
@@ -33,9 +37,7 @@ void main() {
             scanf("%d",&arr[i]);
         }
     insertion(arr, n);
-    for (int i = 0; i < n; i++) {
-        printf("%d\n", arr[i]);
-    }
+   
     }
 }
 

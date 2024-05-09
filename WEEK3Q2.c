@@ -21,7 +21,12 @@ void selection(int *arr, int n)
         arr[i] = temp;
         swaps++;
     }
-    printf("%d %d\n", swaps, comparisions);
+    for (int i = 0; i < n; i++) 
+    {
+        printf("%d ", arr[i]);
+    }
+    printf("\n");
+    printf("comparisons = %d\nswaps =  %d\n", comparisions, swaps);
 }
 
 void main() 
@@ -41,11 +46,7 @@ void main()
 
     selection(arr, n);
 
-    for (int i = 0; i < n; i++) 
-    {
-        printf("%d\n", arr[i]);
-    }
-  
+    
 }
 }
 

@@ -13,14 +13,16 @@ void main()
     {
         scanf("%d",&a[i]);
     }
-    
+    int k;
     for(int i=0;i<n;i++)
     {
-        for(int j=i;j<n;j++){
-            int k=j+1;
+        for(int j=i+1;j<n;j++){
+            k=j+1;
             if(a[i]+a[j] == a[k]){
+             
                 printf("%d %d %d\n",i+1,j+1,k+1);f=0;
             }
+            
         }
     }
    

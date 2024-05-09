@@ -26,15 +26,19 @@ void findMaxOccurrence(char arr[], int size) {
 }
 
 void main() {
+    int t;
+    scanf("%d",&t);
+    while(t!=0){
     char arr[MAX_SIZE];
     int size;
-    printf("Enter the size of the array: ");
     scanf("%d", &size);
-    printf("Enter %d alphabets: ", size);
+    
     for (int i = 0; i < size; i++) {
         scanf(" %c", &arr[i]);
     }
 
   findMaxOccurrence(arr, size);
- 
+    t--;
+    }
+
 }
