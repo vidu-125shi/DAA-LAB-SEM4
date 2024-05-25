@@ -1,37 +1,56 @@
-#include<stdio.h>
-void main()
-{
-     int t;
-    scanf("%d", &t);
-    for(int i=0;i<t;i++){
-        int m;
-        scanf("%d", &m);
-    int a1[m];
-    for(int i=0;i<m;i++){
-        scanf("%d",&a1[i]);
-    }
-    int n;
-    scanf("%d",&n);
-    int a2[n];
-    for(int i=0;i<n;i++){
-        scanf("%d",&a2[i]);
-    }
-    int i=0,j=0;
-    while(i<m && j<n){
-        if(a1[i]<a2[j]){
+#include <stdio.h>
+void findCommonElements(int A[], int M, int B[], int N) {
+    int i = 0, j = 0;
+    int result[M + N];
+    int k = 0;
+    while (i < M && j < N) 
+    {
+        if (A[i] < B[j])
             i++;
-        }
-        else if(a2[j]< a1[i]){
+        else if (B[j] < A[i])
             j++;
-        }
-        else{
-            printf("%d ",a1[i]);
+        else 
+        {
+            result[k++] = A[i];
             i++;
             j++;
         }
     }
-
-
-    } 
-        
+    if (k == 0)
+        printf("No common elements found.\n");
+    else 
+   {
+        for (int i = 0; i < k; i++)
+            printf("%d ", result[i]);
+        printf("\n");
+    }
 }
+int main() 
+{
+    int n,x;
+    int A[n];
+    scanf("%d", &n);
+    for(int i=0;i<n;i++)
+    {
+          scanf("%d",&A[i]);
+    }
+    scanf("%d", &x);
+    int B[x];
+    for(int i=0;i<x;i++)
+    {
+          scanf("%d",&B[i]);
+    }
+    int M = sizeof(A) / sizeof(A[0]);
+    int N = sizeof(B) / sizeof(B[0]);
+    findCommonElements(A, M, B, N);
+     return 0;
+}
+
+
+
+
+
+
+
+
+
