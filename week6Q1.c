@@ -1,59 +1,52 @@
-
 #include <stdio.h>
-#include<stdlib.h>
-#define MAX 100
+#include <stdbool.h>
 
-int visited[MAX];
-int graph[MAX][MAX];
-int vertices;
+#define MAX 100 
 
-void DFS(int source, int destination) {
-    visited[source] = 1;
-     int f=0;
-    for (int i = 0; i < vertices; i++) { 
+bool DFS(int graph[MAX][MAX], int numVertices, int src, int dest, bool visited[MAX]) {
+    if (src == dest) {
+        return true;
+    }
 
-        if (graph[source][i] == 1 && !visited[i]) {
-           
-            if (i == destination) {
-                printf("Yes, Path Exists\n");
-                f=1;
-                break;
+    visited[src] = true;
+
+    for (int i = 0; i < numVertices; i++) {
+        if (graph[src][i] == 1 && !visited[i]) {
+            if (DFS(graph, numVertices, i, dest, visited)) {
+                return true;
             }
-            DFS(i, destination);
         }
     }
-    if(f == 0){
-        printf("No sych path exists\n");
-    }
+
+    return false;
 }
 
 int main() {
-    int source, destination;
-    
-    printf("Enter the number of vertices \n");
-    scanf("%d", &vertices);
-  
-    printf("Enter the adjacency matrix\n");
-    for (int i = 0; i < vertices; i++) {
-        for (int j = 0; j < vertices; j++) {
+    int numVertices;
+    printf("Enter the number of vertices: ");
+    scanf("%d", &numVertices);
+
+    int graph[MAX][MAX];
+    printf("Enter the adjacency matrix:\n");
+    for (int i = 0; i < numVertices; i++) {
+        for (int j = 0; j < numVertices; j++) {
             scanf("%d", &graph[i][j]);
         }
     }
-    
-    printf("Enter source vertex number: ");
-    scanf("%d", &source);
-    
-    printf("Enter destination vertex number: ");
-    scanf("%d", &destination);
-    
-    
-    for (int i = 0; i < vertices; i++) {
-        visited[i] = 0;
+
+    int src, dest;
+    printf("Enter the source vertex: ");
+    scanf("%d", &src);
+    printf("Enter the destination vertex: ");
+    scanf("%d", &dest);
+
+    bool visited[MAX] = { false };
+
+    if (DFS(graph, numVertices, src, dest, visited)) {
+        printf("A path exists between vertex %d and vertex %d.\n", src, dest);
+    } else {
+        printf("No path exists between vertex %d and vertex %d.\n", src, dest);
     }
-    
-    DFS(source, destination);
-    
-    
-    
+
     return 0;
 }

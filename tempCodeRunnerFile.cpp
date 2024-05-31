@@ -3,7 +3,7 @@
 #include<iostream>
 #define INF 100
 using namespace std;
-/*
+
 void DistanceMatrix(int A[5][5], int D[5][5]){
     for(int i=0;i<5;i++){
         for(int j=0;j<5;j++){
@@ -37,6 +37,7 @@ for(int k=0;k<5;k++){
 int main()
 {
    int n;
+   cout<<"Only input 5"<<endl;
    cin>>n;
     int A[n][n];
     for(int i=0;i<n;i++){
@@ -44,7 +45,7 @@ int main()
             cin>>A[i][j];
         }
     }
-    int D[5][5];
+    int D[n][n];
     FloydWarshall(A,D);
     cout<<"Resultant Matrix "<<endl;
     for(int i=0;i<5;i++){
@@ -58,11 +59,4 @@ int main()
         }
         cout<<"\n";
     }
-}
-*/
-int main()
-{
-cout<<"5"<<endl;
-cout<<"0 10 5 5 INF"<<endl<<"INF 0 5 5 5"<<endl<<"INF INF 0 INF 10"<<endl<<"INF INF INF 0 20"<<endl<<"INF INF INF 5 0 "<<endl;
-cout<<"Shortest Distance Matrix:"<<endl<<"0 10 5 5 15"<<endl<<"INF 0 5 5 5"<<endl<<"INF INF 0 15 10"<<endl<<"INF INF INF 0 20"<<endl<<"INF INF INF 5 0"<<endl;
 }

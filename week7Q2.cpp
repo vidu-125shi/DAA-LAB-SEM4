@@ -1,69 +1,79 @@
 #include <iostream>
 #include <vector>
-#include <limits>
+#include <climits>
 
 using namespace std;
 
 struct Edge {
-    int src, dest, weight;
+    int from;
+    int to;
+    int weight;
+    Edge(int f, int t, int w) : from(f), to(t), weight(w) {}
 };
-void bellmanFord(const vector<Edge>& edges, int V, int src) {
-    // Initialize distance array with infinity
-    vector<int> distance(V, numeric_limits<int>::max());
-    distance[src] = 0; // Distance from source to itself is 0
 
-    // Relax all edges V-1 times
+void bellmanFord(int V, int start, const vector<Edge>& edges, vector<int>& dist, vector<int>& prev) {
+    dist.assign(V, INT_MAX);
+    prev.assign(V, -1);
+
+    dist[start] = 0;
+
     for (int i = 0; i < V - 1; ++i) {
-        for (const auto& edge : edges) {
-            int u = edge.src;
-            int v = edge.dest;
-            int weight = edge.weight;
-            if (distance[u] != numeric_limits<int>::max() && distance[u] + weight < distance[v]) {
-                distance[v] = distance[u] + weight;
+        for (const Edge& e : edges) {
+            if (dist[e.from] != INT_MAX && dist[e.from] + e.weight < dist[e.to]) {
+                dist[e.to] = dist[e.from] + e.weight;
+                prev[e.to] = e.from;
             }
         }
     }
 
-
-    for (const auto& edge : edges) {
-        int u = edge.src;
-        int v = edge.dest;
-        int weight = edge.weight;
-        if (distance[u] != numeric_limits<int>::max() && distance[u] + weight < distance[v]) {
-            cout << "Graph contains negative weight cycle\n";
+    for (const Edge& e : edges) {
+        if (dist[e.from] != INT_MAX && dist[e.from] + e.weight < dist[e.to]) {
+            cout << "Graph contains a negative-weight cycle" << endl;
             return;
         }
     }
+}
 
-    for (int i = 0; i < V; ++i) {
-        cout << "Vertex " << i << ": Distance = " << distance[i] << endl;
+void printShortestPath(int source, int destination, const vector<int>& prev, const vector<int>& dist) {
+    if (dist[destination] == INT_MAX) {
+        cout << "No path from " << source << " to " << destination << endl;
+        return;
     }
+
+    vector<int> path;
+    for (int v = destination; v != -1; v = prev[v]) {
+        path.push_back(v);
+    }
+
+    for (int i = path.size() - 1; i >= 0; --i) {
+        cout << path[i];
+        if (i != 0) cout << " -> ";
+    }
+    cout << ", Distance: " << dist[destination] << endl;
 }
 
 int main() {
-    int V; 
-    cout << "Enter the number of vertices: ";
-    cin >> V;
+    int V, source;
+    cin >> V >> source;
 
     vector<Edge> edges;
 
-
-    cout << "Enter the adjacency matrix (enter -1 for no edge):\n";
     for (int i = 0; i < V; ++i) {
         for (int j = 0; j < V; ++j) {
             int weight;
             cin >> weight;
-            if (weight != -1) {
-                edges.push_back({i, j, weight});
+            if (weight != 0) {
+                edges.emplace_back(i, j, weight);
             }
         }
     }
 
-    int src; 
-    cout << "Enter the source vertex number: ";
-    cin >> src;
-
-    bellmanFord(edges, V, src);
+    vector<int> dist, prev;
+    cout << endl << "OUTPUT" << endl;
+    for (int i = 0; i < V; ++i) {
+        bellmanFord(V, i, edges, dist, prev);
+        printShortestPath(i, source, prev, dist);
+    }
 
     return 0;
 }

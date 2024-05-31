@@ -4,93 +4,74 @@
 
 using namespace std;
 
-// Structure to represent an edge
 struct Edge {
-    int src, dest, weight;
+    int u, v, weight;
+    Edge(int u, int v, int weight) : u(u), v(v), weight(weight) {}
 };
 
-// Structure to represent a subset for union-find
-struct Subset {
-    int parent, rank;
-};
-
-// Comparator function to sort edges based on weight
-bool compareEdges(const Edge& e1, const Edge& e2) {
-    return e1.weight < e2.weight;
+bool compareEdges(Edge a, Edge b) {
+    return a.weight < b.weight;
 }
 
-// Find operation for union-find
-int find(vector<Subset>& subsets, int i) {
-    if (subsets[i].parent != i)
-        subsets[i].parent = find(subsets, subsets[i].parent);
-    return subsets[i].parent;
+int find(vector<int>& parent, int i) {
+    if (parent[i] != i) {
+        parent[i] = find(parent, parent[i]);
+    }
+    return parent[i];
 }
 
-// Union operation for union-find
-void unionSets(vector<Subset>& subsets, int x, int y) {
-    int xroot = find(subsets, x);
-    int yroot = find(subsets, y);
-
-    if (subsets[xroot].rank < subsets[yroot].rank)
-        subsets[xroot].parent = yroot;
-    else if (subsets[xroot].rank > subsets[yroot].rank)
-        subsets[yroot].parent = xroot;
-    else {
-        subsets[yroot].parent = xroot;
-        subsets[xroot].rank++;
+void unionSets(vector<int>& parent, vector<int>& rank, int u, int v) {
+    int rootU = find(parent, u);
+    int rootV = find(parent, v);
+    if (rank[rootU] < rank[rootV]) {
+        parent[rootU] = rootV;
+    } else if (rank[rootU] > rank[rootV]) {
+        parent[rootV] = rootU;
+    } else {
+        parent[rootV] = rootU;
+        rank[rootU]++;
     }
 }
 
-// Function to find minimum spanning tree using Kruskal's algorithm
 int kruskalMST(vector<Edge>& edges, int V) {
-    int minCost = 0;
-
-    // Sort edges in ascending order of weight
     sort(edges.begin(), edges.end(), compareEdges);
 
-    vector<Subset> subsets(V);
-    for (int i = 0; i < V; ++i) {
-        subsets[i].parent = i;
-        subsets[i].rank = 0;
+    vector<int> parent(V);
+    vector<int> rank(V, 0);
+    for (int i = 0; i < V; i++) {
+        parent[i] = i;
     }
 
-    int edgeCount = 0;
-    for (auto& edge : edges) {
-        int x = find(subsets, edge.src);
-        int y = find(subsets, edge.dest);
-
-        if (x != y) {
-            minCost += edge.weight;
-            unionSets(subsets, x, y);
-            edgeCount++;
+    int minWeight = 0;
+    for (Edge edge : edges) {
+        int u = find(parent, edge.u);
+        int v = find(parent, edge.v);
+        if (u != v) {
+            minWeight += edge.weight;
+            unionSets(parent, rank, u, v);
         }
-
-        // If we have added V-1 edges, we have constructed the MST
-        if (edgeCount == V - 1)
-            break;
     }
 
-    return minCost;
+    return minWeight;
 }
 
 int main() {
-    int V; // Number of vertices
-    cout << "Enter the number of cities: ";
+    int V;
     cin >> V;
 
-    int E; // Number of edges
-    cout << "Enter the number of roads: ";
-    cin >> E;
-
-    vector<Edge> edges(E);
-
-    cout << "Enter the edges and their weights (source destination weight):" << endl;
-    for (int i = 0; i < E; ++i) {
-        cin >> edges[i].src >> edges[i].dest >> edges[i].weight;
+    vector<Edge> edges;
+    for (int i = 0; i < V; ++i) {
+        for (int j = 0; j < V; ++j) {
+            int weight;
+            cin >> weight;
+            if (weight != 0) {
+                edges.push_back(Edge(i, j, weight));
+            }
+        }
     }
 
-    int minCost = kruskalMST(edges, V);
-    cout << "Minimum cost to connect cities: " << minCost << endl;
+    int minWeight = kruskalMST(edges, V);
+    cout << "Minimum Spanning Weight: " << minWeight << endl;
 
     return 0;
 }
